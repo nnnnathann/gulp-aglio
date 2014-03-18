@@ -1,6 +1,8 @@
 gulp-aglio
 =========
 
+[![Build Status](https://travis-ci.org/nnnnathann/gulp-aglio.png?branch=master)](https://travis-ci.org/nnnnathann/gulp-aglio)
+
 Port of [aglio](https://github.com/danielgtaylor/aglio) to gulp.
 
 Renders standard HTML documentation for
@@ -16,10 +18,8 @@ npm install gulp-aglio
 ````javascript
 var aglio = require('gulp-aglio');
 gulp.task('docs', function () {
-  return gulp.src('_docs/*.md')
-    .pipe(aglio({
-      template: 'default'
-    }))
+  gulp.src('_docs/*.md')
+    .pipe(aglio({ template: 'default' }))
     .pipe(gulp.dest('docs'));
 });
 ````
