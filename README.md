@@ -16,10 +16,8 @@ npm install gulp-aglio
 ````javascript
 var aglio = require('gulp-aglio');
 gulp.task('docs', function () {
-  return gulp.src('_docs/*.md')
-    .pipe(aglio({
-      template: 'default'
-    }))
+  gulp.src('_docs/*.md')
+    .pipe(aglio({ template: 'default' }))
     .pipe(gulp.dest('docs'));
 });
 ````
