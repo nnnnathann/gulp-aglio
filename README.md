@@ -10,6 +10,8 @@ REST APIs through the gulp build system.
 
 ## Install
 
+**Requires node v0.10.x due to protaganist and streams2 dependencies.**
+
 ```
 npm install gulp-aglio
 ```
