@@ -56,9 +56,11 @@ describe('gulp-aglio', function () {
         should.exist(srcFile.relative);
         should.exist(srcFile.contents);
         srcFile.path.should.equal(pj(__dirname, 'fixtures', 'sample.html'));
-        String(srcFile.contents).should.containEql(
-          fs.readFileSync(pj(__dirname, 'expect/sample-default.html'),
-          'utf8')
+        fs.writeFileSync(pj(__dirname, 'fixtures', 'output.html'), srcFile.contents);
+        var compiled = String(srcFile.contents).replace(/[\s]/gi, '');
+        compiled.should.containEql(
+          fs.readFileSync(pj(__dirname, 'expect/sample-default.html'), 'utf8')
+            .replace(/[\s]/gi, '')
         );
         done();
       });
