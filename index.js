@@ -35,7 +35,7 @@ module.exports = function (options) {
     // Injects the path of the current file.
     opts.filename = file.path;
 
-    aglio.render(str, opts.theme, function (err, html) {
+    aglio.render(str, opts, function (err, html) {
       if (err) {
         self.emit('error', new PluginError('gulp-aglio', err));
       } else {
