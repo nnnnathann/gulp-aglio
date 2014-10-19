@@ -1,38 +1,38 @@
 {
-  "name": "gulp-aglio",
-  "version": "0.0.5",
-  "description": "Port of aglio for gulp",
-  "main": "index.js",
-  "scripts": {
-    "test": "node_modules/.bin/jshint index.js && node_modules/.bin/mocha -R spec"
-  },
   "author": "Nathan Bleigh",
-  "license": "MIT",
-  "dependencies": {
-    "lodash.defaults": "~2.4.1",
-    "through2": "~0.4.1",
-    "gulp-util": "~2.2.14",
-    "aglio": "~1.14.0"
+  "bugs": {
+    "url": "https://github.com/nnnnathann/gulp-aglio/issues"
   },
+  "dependencies": {
+    "aglio": "~1.16.1",
+    "gulp-util": "~3.0.1",
+    "lodash.defaults": "~2.4.1",
+    "through2": "~0.6.3"
+  },
+  "description": "Port of aglio for gulp",
   "devDependencies": {
-    "jshint": "~2.4.4",
-    "mocha": "~1.18.0",
-    "should": "~3.1.3"
+    "jshint": "~2.5.6",
+    "mocha": "~1.21.5",
+    "should": "~4.1.0"
   },
   "directories": {
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/nnnnathann/gulp-aglio.git"
-  },
+  "homepage": "https://github.com/nnnnathann/gulp-aglio",
   "keywords": [
     "gulp",
     "aglio",
     "api-blueprint"
   ],
-  "bugs": {
-    "url": "https://github.com/nnnnathann/gulp-aglio/issues"
+  "license": "MIT",
+  "main": "index.js",
+  "name": "gulp-aglio",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nnnnathann/gulp-aglio.git"
   },
-  "homepage": "https://github.com/nnnnathann/gulp-aglio"
+  "scripts": {
+    "test": "node_modules/.bin/jshint index.js && node_modules/.bin/mocha -R spec"
+  },
+  "version": "0.0.5"
 }
