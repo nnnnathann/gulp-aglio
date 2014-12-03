@@ -33,7 +33,9 @@ module.exports = function (options) {
     }, options);
 
     // Injects the path of the current file.
-    opts.filename = file.path;
+    if (opts.filename) {
+      file.path = opts.filename;
+    }
 
     aglio.render(str, opts, function (err, html) {
       if (err) {
