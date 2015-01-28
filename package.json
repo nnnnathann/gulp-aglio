@@ -4,10 +4,10 @@
     "url": "https://github.com/nnnnathann/gulp-aglio/issues"
   },
   "dependencies": {
-    "aglio": "~1.16.1",
-    "gulp-util": "~3.0.1",
-    "lodash.defaults": "~2.4.1",
-    "through2": "~0.6.3"
+    "aglio": "^1.17.1",
+    "gulp-util": "*",
+    "lodash.defaults": "^3.0.0",
+    "through2": "^1.1.1"
   },
   "description": "Port of aglio for gulp",
   "devDependencies": {
