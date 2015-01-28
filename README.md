@@ -3,6 +3,8 @@ gulp-aglio
 
 [![Build Status](https://travis-ci.org/nnnnathann/gulp-aglio.png?branch=master)](https://travis-ci.org/nnnnathann/gulp-aglio)
 
+[![Dependency Status](http://img.shields.io/david/nnnnathann/gulp-aglio.svg?style=flat)](https://david-dm.org/nnnnathann/gulp-aglio)
+
 Port of [aglio](https://github.com/danielgtaylor/aglio) to gulp.
 
 Renders standard HTML documentation for
