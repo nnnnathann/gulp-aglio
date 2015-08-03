@@ -66,5 +66,29 @@ describe('gulp-aglio', function () {
       });
       stream.write(input);
     });
+
+    it('should emit warning and compile success', function (done) {
+      var count = 0;
+      var writtenValue = '';
+      var stdout_write = process.stdout.write;
+      process.stdout.write = function(value) {
+        writtenValue += value;
+        if (++count > 1) {
+          process.stdout.write = stdout_write;
+        }
+      };
+
+      var input = createVinyl('sample-with-warning.md');
+      var stream = aglio({ template: 'default' });
+      stream.on('data', function (srcFile) {
+        var time = gutil.date(new Date(), 'HH:MM:ss');
+        writtenValue.should.eql('[' + gutil.colors.grey(time) + '] '
+          + gutil.colors.cyan(pj(__dirname, 'fixtures', 'sample-with-warning.md')) + ' Line: ' + gutil.colors.magenta('279')
+          + ' unexpected header block, expected a group, resource or an action definition, e.g. '
+          + "'# Group <name>', '# <resource name> [<URI>]' or '# <HTTP method> <URI>'\n");
+        done();
+      });
+      stream.write(input);
+    });
   });
 });
