@@ -11,9 +11,9 @@
   },
   "description": "Port of aglio for gulp",
   "devDependencies": {
-    "jshint": "~2.5.6",
+    "jshint": "~2.8.0",
     "mocha": "^2.2.4",
-    "should": "~4.1.0"
+    "should": "~7.1.1"
   },
   "directories": {
     "test": "test"

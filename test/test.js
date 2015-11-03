@@ -66,5 +66,27 @@ describe('gulp-aglio', function () {
       });
       stream.write(input);
     });
+    it('should inline includes', function (done) {
+      var input = createVinyl('includes/root.md');
+
+      var stream = aglio({
+        template: 'default'
+      });
+      stream.on('data', function (srcFile) {
+        should.exist(srcFile);
+        should.exist(srcFile.path);
+        should.exist(srcFile.relative);
+        should.exist(srcFile.contents);
+        srcFile.path.should.equal(pj(__dirname, 'fixtures', 'includes', 'root.html'));
+        fs.writeFileSync(pj(__dirname, 'fixtures', 'includes', 'output.html'), srcFile.contents);
+        var compiled = String(srcFile.contents).replace(/[\s]/gi, '');
+        compiled.should.containEql(
+          fs.readFileSync(pj(__dirname, 'expect/sample-includes.html'), 'utf8')
+            .replace(/[\s]/gi, '')
+        );
+        done();
+      });
+      stream.write(input);
+    });
   });
 });

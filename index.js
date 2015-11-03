@@ -3,6 +3,7 @@ var through2 = require('through2');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 var defaults = require('lodash.defaults');
+var path = require('path');
 
 module.exports = function (options) {
   'use strict';
@@ -34,6 +35,9 @@ module.exports = function (options) {
 
     // Injects the path of the current file.
     opts.filename = file.path;
+
+    // Inject includePath for relative includes
+    opts.includePath = opts.includePath || path.dirname(opts.filename);
 
     aglio.render(str, opts, function (err, html) {
       if (err) {
