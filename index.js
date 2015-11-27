@@ -4,6 +4,7 @@ var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 var defaults = require('lodash.defaults');
 var path = require('path');
+var clc = require('cli-color');
 
 module.exports = function (options) {
   'use strict';
@@ -12,6 +13,45 @@ module.exports = function (options) {
     compress: false,
     paths: []
   });
+
+  var cErr, cWarn, getLineNo, logWarnings, getErrContext;
+  cErr = clc.white.bgRed;
+  cWarn = clc.xterm(214).bgXterm(235);
+
+  getErrContext = function(input, lineNo) {
+    var inputLines, context, i;
+    inputLines = input.split('\n');
+    context = inputLines.slice(lineNo - 5, lineNo + 5);
+    for(i = 0; i < context.length; i++) {
+        if(i === 4) {
+          context[i] = cWarn('>>>>  ' + context[i]);
+        } else {
+          context[i] = '      ' + context[i];
+        }
+    }
+    context.unshift('      ...');
+    context.push('      ...');
+    return context;
+  };
+
+  getLineNo = function(input, err) {
+    if (err.location && err.location.length) {
+      return input.substr(0, err.location[0].index).split('\n').length;
+    }
+  };
+
+  logWarnings = function(warnings) {
+    var i, len, lineNo, ref, warning, errContext;
+    ref = warnings || [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      warning = ref[i];
+      lineNo = getLineNo(warnings.input, warning) || 0;
+      errContext = getErrContext(warnings.input, lineNo);
+      console.error(cWarn('[aglio] line ' + lineNo + ':') + (' ' + warning.message +  ' (warning code ' + warning.code + ')'));
+      console.error(cWarn('[aglio] context '));
+      console.info(errContext.join('\n'));
+    }
+};
 
   function transform(file, enc, next) {
     var self = this;
@@ -39,10 +79,11 @@ module.exports = function (options) {
     // Inject includePath for relative includes
     opts.includePath = opts.includePath || path.dirname(opts.filename);
 
-    aglio.render(str, opts, function (err, html) {
+    aglio.render(str, opts, function (err, html, warnings) {
       if (err) {
         self.emit('error', new PluginError('gulp-aglio', err));
       } else {
+        logWarnings(warnings);
         file.contents = new Buffer(html);
         file.path = gutil.replaceExtension(file.path, '.html');
         self.push(file);
