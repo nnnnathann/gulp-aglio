@@ -39,10 +39,11 @@ module.exports = function (options) {
     // Inject includePath for relative includes
     opts.includePath = opts.includePath || path.dirname(opts.filename);
 
-    aglio.render(str, opts, function (err, html) {
+    aglio.render(str, opts, function (err, html, warnings) {
       if (err) {
         self.emit('error', new PluginError('gulp-aglio', err));
       } else {
+        console.log(warnings);
         file.contents = new Buffer(html);
         file.path = gutil.replaceExtension(file.path, '.html');
         self.push(file);
