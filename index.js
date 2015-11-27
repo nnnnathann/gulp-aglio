@@ -30,7 +30,7 @@ module.exports = function (options) {
     for (i = 0, len = ref.length; i < len; i++) {
       warning = ref[i];
       lineNo = getLineNo(warnings.input, warning) || 0;
-      console.error(cWarn('>> Line ' + lineNo + ':') + (' ' + warning.message +  ' (warning code ' + warning.code + ')'));
+      console.error(cWarn('[aglio] line ' + lineNo + ':') + (' ' + warning.message +  ' (warning code ' + warning.code + ')'));
     }
 };
 
