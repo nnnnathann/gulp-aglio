@@ -14,9 +14,23 @@ module.exports = function (options) {
     paths: []
   });
 
-  var cErr, cWarn, getLineNo, logWarnings;
+  var cErr, cWarn, getLineNo, logWarnings, getErrContext;
   cErr = clc.white.bgRed;
   cWarn = clc.xterm(214).bgXterm(235);
+
+  getErrContext = function(input, lineNo) {
+    var inputLines, context, i;
+    inputLines = input.split('\n');
+    context = inputLines.slice(lineNo - 5, lineNo + 5);
+    for(i = 0; i < context.length; i++) {
+        if(i === 4) {
+          context[i] = cWarn('>>>>  ' + context[i]);
+        } else {
+          context[i] = '      ' + context[i];
+        }
+    }
+    return context;
+  };
 
   getLineNo = function(input, err) {
     if (err.location && err.location.length) {
@@ -25,12 +39,15 @@ module.exports = function (options) {
   };
 
   logWarnings = function(warnings) {
-    var i, len, lineNo, ref, warning;
+    var i, len, lineNo, ref, warning, errContext;
     ref = warnings || [];
     for (i = 0, len = ref.length; i < len; i++) {
       warning = ref[i];
       lineNo = getLineNo(warnings.input, warning) || 0;
+      errContext = getErrContext(warnings.input, lineNo);
       console.error(cWarn('[aglio] line ' + lineNo + ':') + (' ' + warning.message +  ' (warning code ' + warning.code + ')'));
+      console.error(cWarn('[aglio] context '));
+      console.info(errContext.join('\n'));
     }
 };
 
