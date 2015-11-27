@@ -11,6 +11,7 @@
   },
   "description": "Port of aglio for gulp",
   "devDependencies": {
+    "cli-color": "^1.1.0",
     "jshint": "~2.8.0",
     "mocha": "^2.2.4",
     "should": "~7.1.1"

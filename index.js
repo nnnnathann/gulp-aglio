@@ -4,6 +4,7 @@ var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 var defaults = require('lodash.defaults');
 var path = require('path');
+var clc = require('cli-color');
 
 module.exports = function (options) {
   'use strict';
@@ -12,6 +13,26 @@ module.exports = function (options) {
     compress: false,
     paths: []
   });
+
+  var cErr, cWarn, getLineNo, logWarnings;
+  cErr = clc.white.bgRed;
+  cWarn = clc.xterm(214).bgXterm(235);
+
+  getLineNo = function(input, err) {
+    if (err.location && err.location.length) {
+      return input.substr(0, err.location[0].index).split('\n').length;
+    }
+  };
+
+  logWarnings = function(warnings) {
+    var i, len, lineNo, ref, warning;
+    ref = warnings || [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      warning = ref[i];
+      lineNo = getLineNo(warnings.input, warning) || 0;
+      console.error(cWarn('>> Line ' + lineNo + ':') + (' ' + warning.message +  ' (warning code ' + warning.code + ')'));
+    }
+};
 
   function transform(file, enc, next) {
     var self = this;
@@ -43,7 +64,7 @@ module.exports = function (options) {
       if (err) {
         self.emit('error', new PluginError('gulp-aglio', err));
       } else {
-        console.log(warnings);
+        logWarnings(warnings);
         file.contents = new Buffer(html);
         file.path = gutil.replaceExtension(file.path, '.html');
         self.push(file);
