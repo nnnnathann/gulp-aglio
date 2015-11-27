@@ -29,6 +29,8 @@ module.exports = function (options) {
           context[i] = '      ' + context[i];
         }
     }
+    context.unshift('      ...');
+    context.push('      ...');
     return context;
   };
 
