@@ -29,9 +29,9 @@ module.exports = function (options) {
     var str = file.contents.toString('utf8');
 
     // Clones the options object.
-    var opts = defaults({
+    var opts = defaults(options, {
       theme: 'default'
-    }, options);
+    });
 
     // Injects the path of the current file.
     opts.filename = file.path;
