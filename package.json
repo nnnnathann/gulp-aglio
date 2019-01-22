@@ -4,16 +4,23 @@
     "url": "https://github.com/nnnnathann/gulp-aglio/issues"
   },
   "dependencies": {
-    "aglio": "^2.0.0",
+    "aglio": "^2.3.0",
     "gulp-util": "^3.0.6",
     "lodash.defaults": "^3.1.2",
     "through2": "^2.0.0"
   },
   "description": "Port of aglio for gulp",
   "devDependencies": {
-    "jshint": "~2.8.0",
-    "mocha": "^2.2.4",
+    "jshint": "^2.9.7",
+    "mocha": "^4.1.0",
     "should": "~7.1.1"
+  },
+  "resolutions": {
+    "uglify-js": "^2.8.29",
+    "socket.io": "^2.1.0",
+    "minimatch": "^3.0.2",
+    "markdown-it-anchor": "5.0.2",
+    "hoek": "^6.1.2"
   },
   "directories": {
     "test": "test"
