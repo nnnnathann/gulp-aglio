@@ -51,7 +51,7 @@ module.exports = function (options) {
         next();
       });
     } catch(err) {
-      self.emit("error", new PluginError("gulp-aglio", err));
+      self.emit('error', new PluginError('gulp-aglio', err));
     }
   }
 
