@@ -38,17 +38,21 @@ module.exports = function (options) {
 
     // Inject includePath for relative includes
     opts.includePath = opts.includePath || path.dirname(opts.filename);
-
-    aglio.render(str, opts, function (err, html) {
-      if (err) {
-        self.emit('error', new PluginError('gulp-aglio', err));
-      } else {
-        file.contents = new Buffer(html);
-        file.path = gutil.replaceExtension(file.path, '.html');
-        self.push(file);
-      }
-      next();
-    });
+    
+    try {
+      aglio.render(str, opts, function (err, html) {
+        if (err) {
+          self.emit('error', new PluginError('gulp-aglio', err));
+        } else {
+          file.contents = new Buffer(html);
+          file.path = gutil.replaceExtension(file.path, '.html');
+          self.push(file);
+        }
+        next();
+      });
+    } catch(err) {
+      self.emit("error", new PluginError("gulp-aglio", err));
+    }
   }
 
   return through2.obj(transform);
