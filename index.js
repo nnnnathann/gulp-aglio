@@ -38,19 +38,19 @@ module.exports = function (options) {
 
     // Inject includePath for relative includes
     opts.includePath = opts.includePath || path.dirname(opts.filename);
-    
+
     try {
       aglio.render(str, opts, function (err, html) {
         if (err) {
           self.emit('error', new PluginError('gulp-aglio', err));
         } else {
-          file.contents = new Buffer(html);
+          file.contents = Buffer.from(html);
           file.path = gutil.replaceExtension(file.path, '.html');
           self.push(file);
         }
         next();
       });
-    } catch(err) {
+    } catch (err) {
       self.emit('error', new PluginError('gulp-aglio', err));
     }
   }
