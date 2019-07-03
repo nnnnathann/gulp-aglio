@@ -2,3 +2,4 @@
 node_modules
 test/fixtures/output.html
 test/fixtures/includes/output.html
+.vscode
