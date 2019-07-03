@@ -1,59 +1,59 @@
-var aglio = require('aglio');
-var through2 = require('through2');
-var gutil = require('gulp-util');
-var PluginError = gutil.PluginError;
-var defaults = require('lodash.defaults');
-var path = require('path');
+var aglio = require('aglio')
+var through2 = require('through2')
+var gutil = require('gulp-util')
+var PluginError = gutil.PluginError
+var defaults = require('lodash.defaults')
+var path = require('path')
 
 module.exports = function (options) {
-  'use strict';
+  'use strict'
   // Mixes in default options.
   options = defaults(options || {}, {
     compress: false,
     paths: []
-  });
+  })
 
-  function transform(file, enc, next) {
-    var self = this;
+  function transform (file, enc, next) {
+    var self = this
 
     if (file.isNull()) {
-      self.push(file); // pass along
-      return next();
+      self.push(file) // pass along
+      return next()
     }
 
     if (file.isStream()) {
-      self.emit('error', new PluginError('gulp-aglio', 'Streaming not supported'));
-      return next();
+      self.emit('error', new PluginError('gulp-aglio', 'Streaming not supported'))
+      return next()
     }
 
-    var str = file.contents.toString('utf8');
+    var str = file.contents.toString('utf8')
 
     // Clones the options object.
     var opts = defaults({
       theme: 'default'
-    }, options);
+    }, options)
 
     // Injects the path of the current file.
-    opts.filename = file.path;
+    opts.filename = file.path
 
     // Inject includePath for relative includes
-    opts.includePath = opts.includePath || path.dirname(opts.filename);
+    opts.includePath = opts.includePath || path.dirname(opts.filename)
 
     try {
       aglio.render(str, opts, function (err, html) {
         if (err) {
-          self.emit('error', new PluginError('gulp-aglio', err));
+          self.emit('error', new PluginError('gulp-aglio', err))
         } else {
-          file.contents = Buffer.from(html);
-          file.path = gutil.replaceExtension(file.path, '.html');
-          self.push(file);
+          file.contents = new Buffer(html)
+          file.path = gutil.replaceExtension(file.path, '.html')
+          self.push(file)
         }
-        next();
-      });
+        next()
+      })
     } catch (err) {
-      self.emit('error', new PluginError('gulp-aglio', err));
+      self.emit('error', new PluginError('gulp-aglio', err))
     }
   }
 
-  return through2.obj(transform);
+  return through2.obj(transform)
 };
