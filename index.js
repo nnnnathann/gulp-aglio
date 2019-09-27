@@ -34,7 +34,9 @@ module.exports = function (options) {
     }, options);
 
     // Injects the path of the current file.
-    opts.filename = file.path;
+    if (opts.filename) {
+      file.path = opts.filename;
+    }
 
     // Inject includePath for relative includes
     opts.includePath = opts.includePath || path.dirname(opts.filename);
